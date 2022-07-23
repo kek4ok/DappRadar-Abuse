@@ -2,8 +2,7 @@ import datetime
 import json
 import time
 
-from dapp_inter import sign_message, send_signed_message, get_message, add_email, get_verif_link, identify, \
-    participate_in_airdrop
+from dapp_inter import *
 from bnb_chain import balance_of, token_balance
 
 with open("email.txt", 'r') as r:
@@ -156,3 +155,14 @@ def get_token_balance():
     for i in data:
         wallet = data[i]["address"]
         balance = token_balance(wallet, "PVU")
+
+def check_winners():
+    winners_list = get_winners_list(91)
+    with open("base.json", 'r+') as f:
+        data = json.load(f)
+        f.close()
+    for i in data:
+        wallet = data[i]["address"]
+        if wallet in winners_list:
+            print(wallet)
+

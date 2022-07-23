@@ -27,7 +27,6 @@ def sign_message(msg, private_key):
 
 
 def send_signed_message(wallet, signature, message):
-
     url = f"https://auth.dappradar.com/apiv4/users/sign_metamask/{wallet}"
     data = {
         "signature": signature,
@@ -125,5 +124,25 @@ def participate_in_airdrop(email, wallet, token):
     }
     response = requests.post(url, headers=headers, json=data).json()
     print(response)
+
+
+def get_winners_list(airdrop_id):
+    url = f'https://backoffice-new.dappradar.com/airdrops/{airdrop_id}/winners?fiat=USD'
+    ses1 = requests.Session()
+    ses1.headers = {
+        'Accept': '*/*',
+        'Connection': 'keep-alive',
+        'Host': 'backoffice-new.dappradar.com',
+        'Referer': 'https://dappradar.com/'
+    }
+    scraper2 = cloudscraper.create_scraper(sess=ses1, browser={
+        'browser': 'chrome',
+        'platform': 'windows',
+        'desktop': True
+    })
+    response = scraper2.get(url).json()
+
+    return response
+
 
 
